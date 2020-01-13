@@ -2,13 +2,20 @@ import json
 from io import BytesIO
 import requests
 from PIL import Image
+from SimpleCV import Camera
+import pytesseract
+from time import sleep
 
 
 def get_id_from_card() -> str:
     """
     Detect and return the current ID of the card being used
     """
-    return "12345678"
+    cam = Camera()
+    sleep(0.1)
+    img = cam.getImage()
+    id = pytesseract.image_to_string(img)
+    return id
 
 
 def get_card_image(id: str):
