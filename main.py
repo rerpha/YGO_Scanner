@@ -17,6 +17,7 @@ def get_id_from_card() -> str:
     # Camera warm-up time
     sleep(2)
     camera.capture(my_stream, "jpeg")
+    my_stream.seek(0)
     id = pytesseract.image_to_string(my_stream)
     return id
 
