@@ -1,11 +1,29 @@
+import argparse
+
+parser = argparse.ArgumentParser(
+    description="Get card information from scanned yugioh cards"
+)
+parser.add_argument("-f", help="fake a raspberry pi instance")
+args = parser.parse_args()
+
+if args.f:
+    import sys
+    import fake_rpi
+
+    sys.modules["RPi"] = fake_rpi.RPi  # Fake RPi (GPIO)
+    sys.modules["smbus"] = fake_rpi.smbus  # Fake smbus (I2C)
+    from fake_rpi import picamera
+else:
+    import picamera
+
+
 import json
 from io import BytesIO
 import requests
 from PIL import Image
-from picamera import PiCamera
 import pytesseract
 from time import sleep
-import argparse
+
 
 def get_id_from_card() -> str:
     """
@@ -18,7 +36,7 @@ def get_id_from_card() -> str:
 
 def capture_image():
     my_stream = BytesIO()
-    camera = PiCamera()
+    camera = picamera.PiCamera()
     camera.start_preview()
     # Camera warm-up time
     sleep(2)
@@ -42,6 +60,5 @@ def button_callback():
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Get card information from scanned yugioh cards")
     # Basic example for de-fusion
     get_card_image(95286165)

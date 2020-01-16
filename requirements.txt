@@ -1,3 +1,4 @@
 pytesseract
 requests
 picamera
+fake-rpi
