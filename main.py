@@ -5,12 +5,18 @@ from PIL import Image
 from picamera import PiCamera
 import pytesseract
 from time import sleep
-
+import argparse
 
 def get_id_from_card() -> str:
     """
     Detect and return the current ID of the card being used
     """
+    my_stream = capture_image()
+    id = pytesseract.image_to_string(my_stream)
+    return id
+
+
+def capture_image():
     my_stream = BytesIO()
     camera = PiCamera()
     camera.start_preview()
@@ -18,8 +24,7 @@ def get_id_from_card() -> str:
     sleep(2)
     camera.capture(my_stream, "jpeg")
     my_stream.seek(0)
-    id = pytesseract.image_to_string(my_stream)
-    return id
+    return my_stream
 
 
 def get_card_image(id: str):
@@ -37,5 +42,6 @@ def button_callback():
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Get card information from scanned yugioh cards")
     # Basic example for de-fusion
     get_card_image(95286165)
