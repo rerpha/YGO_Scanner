@@ -46,7 +46,7 @@ def capture_image():
 
 
 def get_card_image(id: str):
-    response = requests.get(f"https://db.ygoprodeck.com/api/v5/cardinfo.php?name={id}")
+    response = requests.get(f"https://db.ygoprodeck.com/api/v6/cardinfo.php?name={id}")
     json_dict = json.loads(response.content)[0]
     image_url = json_dict["card_images"][0]["image_url"]
     image_data = requests.get(image_url).content
