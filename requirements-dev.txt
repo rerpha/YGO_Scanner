@@ -1,0 +1,7 @@
+# Development requirements
+
+# Mirror the basic requirements
+-r requirements.txt
+
+# Formatting
+black
