@@ -30,7 +30,7 @@ def get_id_from_card() -> str:
     Detect and return the current ID of the card being used
     """
     my_stream = capture_image()
-    id = pytesseract.image_to_string(my_stream, config="digits")
+    id = pytesseract.image_to_string(my_stream, config='digits')
     return id
 
 
