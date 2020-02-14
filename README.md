@@ -3,3 +3,5 @@
 
 
 # YGO_Scanner
+
+This is my attempt at playing around with pytesseract to try and recognise Yu-Gi-Oh! Card IDs and display their information in a Qt widget by using a model to store the card info. 
