@@ -46,7 +46,6 @@ class TrapCard(CardModel):
 
 
 class MonsterCard(CardModel):
-    race = ""
+    type = ""
     attack = 0
     defence = 0
-    type = ""
