@@ -57,7 +57,9 @@ class Card(QWidget):
 
         self.picture_frame = QFrame()
         self.picture_frame.setFixedSize(250, 250)
+        self.picture_frame.setFrameStyle(QFrame.Box | QFrame.Plain)
         self.picture_frame.setFrameShadow(QFrame.Shadow.Raised)
+        self.picture_frame.setLineWidth(1)
         self.main_layout.addWidget(self.picture_frame)
 
         # Card sets here?
