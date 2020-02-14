@@ -1,9 +1,13 @@
 import argparse
 
+from PySide2.QtWidgets import QApplication
+
+from card import Card
+
 parser = argparse.ArgumentParser(
     description="Get card information from scanned yugioh cards"
 )
-parser.add_argument("-f", help="fake a raspberry pi instance")
+parser.add_argument("-f", help="fake a raspberry pi instance", action="store_true")
 args = parser.parse_args()
 
 if args.f:
@@ -46,12 +50,17 @@ def capture_image():
 
 
 def get_card_image(id: str):
-    response = requests.get(f"https://db.ygoprodeck.com/api/v5/cardinfo.php?name={id}")
-    json_dict = json.loads(response.content)[0]
+    json_dict = pull_card_data(id)
     image_url = json_dict["card_images"][0]["image_url"]
     image_data = requests.get(image_url).content
     image = Image.open(BytesIO(image_data))
     image.show()
+
+
+def pull_card_data(id):
+    response = requests.get(f"https://db.ygoprodeck.com/api/v5/cardinfo.php?name={id}")
+    json_dict = json.loads(response.content)[0]
+    return json_dict
 
 
 def button_callback():
@@ -61,4 +70,8 @@ def button_callback():
 
 if __name__ == "__main__":
     # Basic example for de-fusion
-    get_card_image(95286165)
+    app = QApplication(sys.argv)
+    data = pull_card_data(95286165)
+    window = Card(None, data)
+    window.show()
+    sys.exit(app.exec_())
