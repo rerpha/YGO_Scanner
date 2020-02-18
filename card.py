@@ -1,6 +1,6 @@
 from typing import Dict, Any
 from PySide2.QtCore import Qt
-from PySide2.QtGui import QPixmap, QPalette, QColor
+from PySide2.QtGui import QPixmap, QPalette, QColor, QFont
 from PySide2.QtWidgets import (
     QWidget,
     QHBoxLayout,
@@ -45,9 +45,16 @@ class Card(QWidget):
 
         self.name_attr_layout = QHBoxLayout()
         self.name_label = QLabel(self.model.name)
+        font = self.name_label.font()
+        font.setBold(True)
+        font.setCapitalization(QFont.AllUppercase)
+        font.setPointSize(12)
+        self.name_label.setFont(font)
+        self.name_label.setMargin(5)
         pixmap = get_attr_icon(self.model.attr)
         self.attr_icon = QLabel()
         self.attr_icon.setPixmap(pixmap)
+        self.attr_icon.setAlignment(Qt.AlignRight)
         self.name_attr_layout.addWidget(self.name_label)
         self.name_attr_layout.addWidget(self.attr_icon)
         self.main_layout.addLayout(self.name_attr_layout)
@@ -65,11 +72,13 @@ class Card(QWidget):
         # Card sets here?
 
         self.desc_group_box = QGroupBox()
+        self.desc_group_box.setMaximumWidth(250)
         self.set_up_group_box()
         self.main_layout.addWidget(self.desc_group_box)
 
         self.id_label = QLabel(self.model.id)
         self.id_label.setAlignment(Qt.AlignLeft)
+        self.id_label.setMargin(5)
         self.main_layout.addWidget(self.id_label)
 
         self.setLayout(self.main_layout)
