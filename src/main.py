@@ -6,7 +6,7 @@ from PIL import Image
 import pytesseract
 from time import sleep
 from PySide2.QtWidgets import QApplication
-from card import Card
+from src.card import Card
 
 parser = argparse.ArgumentParser(
     description="Get card information from scanned yugioh cards"

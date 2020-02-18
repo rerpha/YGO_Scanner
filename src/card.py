@@ -13,9 +13,9 @@ from PySide2.QtWidgets import (
     QFrame,
     QGridLayout,
 )
-from card_model import create_card, TrapCard, SpellCard, MonsterCard
+from src.card_model import create_card, TrapCard, SpellCard, MonsterCard
 from urllib import request
-from card_type import CardColours, CardType
+from src.card_type import CardColours, CardType
 
 
 def get_attr_icon(attr: str):
