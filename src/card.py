@@ -30,7 +30,8 @@ def get_attr_icon(attr: str):
 class Card(QWidget):
     def __init__(self, parent: QWidget, card_details: Dict[str, Any]):
         super().__init__()
-        self.setParent(parent)
+        if parent is not None:
+            self.setParent(parent)
         self.model = create_card(card_details)
         self.setupUi()
 
@@ -43,7 +44,6 @@ class Card(QWidget):
             pass
 
     def setupUi(self):
-
         self.main_layout = QVBoxLayout()
 
         self.name_attr_layout = QHBoxLayout()
@@ -117,9 +117,9 @@ class Card(QWidget):
 
     def set_up_group_box(self):
         self.desc_group_box.setLayout(QVBoxLayout())
-        desc_label = QLabel(self.model.desc)
-        desc_label.setWordWrap(True)
-        self.desc_group_box.layout().addWidget(desc_label)
+        self.desc_label = QLabel(self.model.desc)
+        self.desc_label.setWordWrap(True)
+        self.desc_group_box.layout().addWidget(self.desc_label)
         if isinstance(self.model, (MonsterCard)):
             self.desc_group_box.setTitle(self.get_group_box_title())
             line = QFrame()
