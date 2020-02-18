@@ -76,9 +76,8 @@ def basic_usage():
 
 
 if __name__ == "__main__":
-    # Basic example for de-fusion
     app = QApplication(sys.argv)
-
+    # basic_usage()
     while True:
         capture_and_detect()
         time.sleep(1)
