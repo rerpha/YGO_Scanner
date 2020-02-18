@@ -3,3 +3,4 @@ requests
 # picamera
 fake-rpi
 pyside2==5.14.1
+pillow
