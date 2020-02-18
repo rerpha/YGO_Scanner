@@ -1,6 +1,9 @@
+from io import BytesIO
 from typing import Dict, Any
+import requests
+from PIL import Image
 from PySide2.QtCore import Qt
-from PySide2.QtGui import QPixmap, QPalette, QColor, QFont
+from PySide2.QtGui import QPixmap, QPalette, QColor, QFont, QImage
 from PySide2.QtWidgets import (
     QWidget,
     QHBoxLayout,
@@ -8,10 +11,10 @@ from PySide2.QtWidgets import (
     QVBoxLayout,
     QGroupBox,
     QFrame,
+    QGridLayout,
 )
 from card_model import create_card, TrapCard, SpellCard, MonsterCard
 from urllib import request
-
 from card_type import CardColours, CardType
 
 
@@ -67,6 +70,21 @@ class Card(QWidget):
         self.picture_frame.setFrameStyle(QFrame.Box | QFrame.Plain)
         self.picture_frame.setFrameShadow(QFrame.Shadow.Raised)
         self.picture_frame.setLineWidth(1)
+        self.picture_frame.setContentsMargins(0, 0, 0, 0)
+        self.picture_frame.setLayout(QGridLayout())
+        self.image_holder = QLabel()
+
+        pixmap = self._get_card_image()
+        self.image_holder.setPixmap(
+            pixmap.scaled(
+                self.picture_frame.width(),
+                self.picture_frame.height(),
+                Qt.KeepAspectRatio,
+            )
+        )
+
+        self.picture_frame.layout().addWidget(self.image_holder)
+
         self.main_layout.addWidget(self.picture_frame)
 
         # Card sets here?
@@ -87,6 +105,15 @@ class Card(QWidget):
         pal.setColor(QPalette.Background, self.get_card_background_colour())
         self.setAutoFillBackground(True)
         self.setPalette(pal)
+
+    def _get_card_image(self):
+        image_data = requests.get(self.model.img_url).content
+        image = Image.open(BytesIO(image_data))
+        image = image.crop((44, 106, 380, 438))  # this is about correct
+        data = image.tobytes("raw", "RGB")
+        qimage = QImage(data, image.size[0], image.size[1], QImage.Format_RGB888)
+        pixmap = QPixmap.fromImage(qimage)
+        return pixmap
 
     def set_up_group_box(self):
         self.desc_group_box.setLayout(QVBoxLayout())
