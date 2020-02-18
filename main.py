@@ -74,6 +74,7 @@ def basic_usage():
     window = Card(None, data)
     window.show()
 
+
 if __name__ == "__main__":
     # Basic example for de-fusion
     app = QApplication(sys.argv)
