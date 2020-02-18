@@ -1,7 +1,11 @@
 import argparse
-
+import json
+from io import BytesIO
+import requests
+from PIL import Image
+import pytesseract
+from time import sleep
 from PySide2.QtWidgets import QApplication
-
 from card import Card
 
 parser = argparse.ArgumentParser(
@@ -21,14 +25,6 @@ else:
     import picamera
 
 
-import json
-from io import BytesIO
-import requests
-from PIL import Image
-import pytesseract
-from time import sleep
-
-
 def get_id_from_card() -> str:
     """
     Detect and return the current ID of the card being used
@@ -46,6 +42,7 @@ def capture_image():
     sleep(2)
     camera.capture(my_stream, "jpeg")
     my_stream.seek(0)
+    # TODO: we are going to need to crop it here
     return my_stream
 
 

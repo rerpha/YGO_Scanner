@@ -6,4 +6,6 @@
 # Formatting
 black
 
-pillow
+# Linting
+flake8
+
