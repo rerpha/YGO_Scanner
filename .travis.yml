@@ -9,7 +9,7 @@ install:
 script:
   - black --check .
   - flake8 .
-  - pytest --cov-report term --cov=ygoscanner
+  - pytest --cov-report term --cov=src
   - python main.py --help
 after_success:
   - codecov
