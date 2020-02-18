@@ -4,7 +4,7 @@ from io import BytesIO
 import requests
 from PIL import Image
 import pytesseract
-from time import sleep
+from time import sleep, time
 from PySide2.QtWidgets import QApplication
 from src.card import Card
 
@@ -42,7 +42,7 @@ def capture_image():
     sleep(2)
     camera.capture(my_stream, "jpeg")
     my_stream.seek(0)
-    # TODO: we are going to need to crop it here
+    # TODO: we are going to need to crop it here for performance and clarity
     return my_stream
 
 
@@ -60,15 +60,26 @@ def pull_card_data(id):
     return json_dict
 
 
-def button_callback():
+def capture_and_detect():
     id = get_id_from_card()
-    get_card_image(id)
+    if len(id) == 8:
+        data = pull_card_data(get_id_from_card())
+        window = Card(None, data)
+        window.show()
 
+
+def basic_usage():
+    """Basic usage of the application, minus the card recognition bits"""
+    data = pull_card_data(95286165)
+    window = Card(None, data)
+    window.show()
 
 if __name__ == "__main__":
     # Basic example for de-fusion
     app = QApplication(sys.argv)
-    data = pull_card_data(95286165)
-    window = Card(None, data)
-    window.show()
+
+    while True:
+        capture_and_detect()
+        time.sleep(1)
+
     sys.exit(app.exec_())

@@ -9,3 +9,6 @@ black
 # Linting
 flake8
 
+# Testing
+pytest
+pytest-qt
