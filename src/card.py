@@ -114,8 +114,6 @@ class Card(QWidget):
             image = Image.open(self.get_image_path(image_name))
         else:
             image_data = requests.get(self.model.img_url).content
-            # with Image.open(self.get_image_path(image_name), "w") as file:
-            #     file.save(image_data)
             image = Image.open(BytesIO(image_data))
             image.save(self.get_image_path(image_name))
         image = image.crop((44, 106, 380, 438))  # this is about correct
