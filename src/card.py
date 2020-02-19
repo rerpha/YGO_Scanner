@@ -1,3 +1,4 @@
+import os
 from io import BytesIO
 from typing import Dict, Any
 import requests
@@ -107,13 +108,22 @@ class Card(QWidget):
         self.setPalette(pal)
 
     def _get_card_image(self):
-        image_data = requests.get(self.model.img_url).content
-        image = Image.open(BytesIO(image_data))
+        image_name = self.model.img_url.split("/")[-1]
+
+        if os.path.exists(self.get_image_path(image_name)):
+            image = Image.open(self.get_image_path(image_name))
+        else:
+            image_data = requests.get(self.model.img_url).content
+            image = Image.open(BytesIO(image_data))
+            image.save(self.get_image_path(image_name))
         image = image.crop((44, 106, 380, 438))  # this is about correct
         data = image.tobytes("raw", "RGB")
         qimage = QImage(data, image.size[0], image.size[1], QImage.Format_RGB888)
         pixmap = QPixmap.fromImage(qimage)
         return pixmap
+
+    def get_image_path(self, image_name):
+        return os.path.join(os.getcwd(), "images", image_name)
 
     def set_up_group_box(self):
         self.desc_group_box.setLayout(QVBoxLayout())
