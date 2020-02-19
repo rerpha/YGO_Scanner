@@ -73,11 +73,12 @@ def basic_usage(id: str):
     data = pull_card_data(id)
     window = Card(None, data)
     window.show()
+    return window
 
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    basic_usage(95286165)
+    window = basic_usage(95286165)
     # while True:
     #     capture_and_detect()
     #     time.sleep(1)
