@@ -4,7 +4,7 @@ from io import BytesIO
 import requests
 from PIL import Image
 import pytesseract
-from time import sleep, time
+from time import sleep
 from PySide2.QtWidgets import QApplication
 from src.card import Card
 
@@ -68,18 +68,18 @@ def capture_and_detect():
         window.show()
 
 
-def basic_usage():
+def basic_usage(id: str):
     """Basic usage of the application, minus the card recognition bits"""
-    data = pull_card_data(95286165)
+    data = pull_card_data(id)
     window = Card(None, data)
     window.show()
 
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    # basic_usage()
-    while True:
-        capture_and_detect()
-        time.sleep(1)
+    basic_usage(95286165)
+    # while True:
+    #     capture_and_detect()
+    #     time.sleep(1)
 
     sys.exit(app.exec_())
