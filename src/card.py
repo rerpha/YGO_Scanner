@@ -136,9 +136,9 @@ class Card(QWidget):
             line.setFrameShape((QFrame.HLine))
             line.setFrameShadow(QFrame.Sunken)
             self.desc_group_box.layout().addWidget(line)
-            label = QLabel(f"ATK/{self.model.defence}  DEF/{self.model.attack}")
+            label = QLabel(f"ATK/{self.model.attack}  DEF/{self.model.defence}")
             label.setAlignment(Qt.AlignRight)
             self.desc_group_box.layout().addWidget(label)
 
     def get_group_box_title(self):
-        return f"[TEST/TEST]"
+        return "[TEST/TEST]"
