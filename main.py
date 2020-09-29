@@ -1,6 +1,8 @@
 import argparse
 import json
 from io import BytesIO
+from typing import Any
+
 import requests
 from PIL import Image
 import pytesseract
@@ -30,8 +32,8 @@ def get_id_from_card() -> str:
     Detect and return the current ID of the card being used
     """
     my_stream = capture_image()
-    id = pytesseract.image_to_string(my_stream, config="digits")
-    return id
+    card_id = pytesseract.image_to_string(my_stream, config="digits")
+    return card_id
 
 
 def capture_image():
@@ -61,26 +63,24 @@ def pull_card_data(id):
 
 
 def capture_and_detect():
-    id = get_id_from_card()
-    if len(id) == 8:
+    card_id = get_id_from_card()
+    if len(card_id) == 8:
         data = pull_card_data(get_id_from_card())
-        window = Card(None, data)
-        window.show()
+        qt_window = Card(None, data)
+        qt_window.show()
 
 
-def basic_usage(id: str):
+def basic_usage(card_id: str, parent: Any = None):
     """Basic usage of the application, minus the card recognition bits"""
-    data = pull_card_data(id)
-    window = Card(None, data)
-    window.show()
-    return window
+    data = pull_card_data(card_id)
+    qt_window = Card(parent, data)
+    qt_window.setWindowTitle("YGO Scanner")
+    qt_window.show()
+    return qt_window
 
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = basic_usage(95286165)
-    # while True:
-    #     capture_and_detect()
-    #     time.sleep(1)
 
     sys.exit(app.exec_())
