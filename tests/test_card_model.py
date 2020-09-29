@@ -28,4 +28,4 @@ def test_GIVEN_card_type_WHEN_creating_card_THEN_correct_type_of_card_is_created
     card = create_card(card_details)
 
     assert isinstance(card, card_type)
-    assert card.attr == attr
+    assert card.attribute == attr

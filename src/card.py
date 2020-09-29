@@ -55,7 +55,7 @@ class Card(QWidget):
         font.setPointSize(12)
         self.name_label.setFont(font)
         self.name_label.setMargin(5)
-        pixmap = get_attr_icon(self.model.attr)
+        pixmap = get_attr_icon(self.model.attribute)
         self.attr_icon = QLabel()
         self.attr_icon.setPixmap(pixmap)
         self.attr_icon.setAlignment(Qt.AlignRight)
