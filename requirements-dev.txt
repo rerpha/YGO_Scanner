@@ -11,4 +11,4 @@ flake8
 
 # Testing
 pytest
-git+git://github.com/pytest-dev/pytest-qt.git@a2d49ceaab78bd981348f829ad74db5f56d85ae9
+git+git://github.com/pytest-dev/pytest-qt.git@4c1a674addb5b3fa442932d8296ef2dbe25c34ca
