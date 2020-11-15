@@ -141,4 +141,4 @@ class Card(QWidget):
             self.desc_group_box.layout().addWidget(label)
 
     def get_group_box_title(self):
-        return f"[TEST/TEST]"
+        return "[TEST/TEST]"
