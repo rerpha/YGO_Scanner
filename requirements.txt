@@ -2,5 +2,5 @@ pytesseract
 requests
 # picamera
 fake-rpi
-pyside2
+pyside2==5.14.2.3
 pillow
